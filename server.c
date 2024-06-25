@@ -6,7 +6,7 @@
 /*   By: ineimatu <ineimatu@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 10:11:35 by ineimatu          #+#    #+#             */
-/*   Updated: 2024/06/25 12:28:44 by ineimatu         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:01:52 by ineimatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@ static char *connect(char *str, char c)
 	if (!str2)
 	{
 		free(str);
-		free(str2);
 		return (NULL);
+	}
+	if(!str)
+	{
+		str2[b] = c;
+		str2[b + 1] = '\0';
+		return(str2);;
 	}
 	while (str[i] != '\0')
 	{	
@@ -48,36 +53,32 @@ static void	handl(int signum, siginfo_t *siginfo, void *context)
 {
 	static int	bit = 0;
 	static char	c = 0;
-	static char	*str = NULL;
+	static char	*str;
 	int			i;
 
 	(void)siginfo;
 	(void)context;
 	i = 0;
-	//write(1, "i", 1);
 	if (signum == SIGUSR1)
 		c |= (1 << bit);
 	bit++;
 	if (bit == 8)
 	{
-		if (c != 0)
+		if (c)
 		{
-			write(1, "ifcexis\n", 8);
-			if (!str)
+			/*if (!str)
 			{
-				str = malloc(sizeof(char));
+				str = (char *)malloc(sizeof(char));
 				if (!str)
 					return ;
 				str[0] = '\0';
-			}
+			}*/
 			str = connect(str, c);
-			write (1, "con", 3);
 		}
 		else
 		{
 			if (str)
 			{	
-				write(1, "print", 5);		
 				while(str[i])
 				{
 					write(1, &str[i], 1);
@@ -114,6 +115,6 @@ int	main(void)
 	if (sigaction(SIGUSR2, &sigac, NULL) == -1)
 		return (write(2, "Error", 6));
 	while (1)
-		pause ();
+		pause();
 	return (0);
 }

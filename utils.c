@@ -6,7 +6,7 @@
 /*   By: ineimatu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 12:45:27 by ineimatu          #+#    #+#             */
-/*   Updated: 2024/06/17 13:19:04 by ineimatu         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:23:39 by ineimatu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlen(char *s)
 	size_t	e;
 
 	e = 0;
+	if (!s)
+		return (0);
 	while (s[e] != '\0')
 		e++;
 	return (e);
